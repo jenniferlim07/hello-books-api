@@ -73,10 +73,11 @@ def handle_books():
     db.session.add(new_book)
     db.session.commit()
 
-    return {
-        "success": True,
-        "message": f"Book {new_book.title} has been created"
-    }, 201
+    return new_book.to_json(), 201
+    # return {
+    #     "success": True,
+    #     "message": f"Book {new_book.title} has been created"
+    # }, 201
 
 
 @books_bp.route("<book_id>", methods=["PUT"], strict_slashes=False)
@@ -95,10 +96,10 @@ def update_book(book_id):
 
     db.session.commit()
 
-    return {
+    return jsonify({
         "success": True,
         "message": f"Book {book_id} successfully updated"
-    }, 200
+    }), 200
 
 
 @books_bp.route("<book_id>", methods=["DELETE"], strict_slashes=False)
