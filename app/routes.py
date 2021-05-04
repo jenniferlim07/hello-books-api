@@ -12,7 +12,7 @@ def is_int(value):
     except ValueError:
         return False
 
-@books_bp.route("/<book_id>", methods=["GET"], strict_slashes=False)
+@books_bp.route("/<int:book_id>", methods=["GET"], strict_slashes=False)
 def get_single_book(book_id):
     # Try to find the book with the given id
     if not is_int(book_id):
@@ -32,21 +32,26 @@ def get_single_book(book_id):
     #     "success" : False
     # }, 404
 
-# @books_bp.route("", methods=["GET"], strict_slashes=False)  
-# def get_book_title():
+@books_bp.route("/<title>", methods=["GET"], strict_slashes=False)  
+def get_book_title(title):
+    print("****", title)
+    # title_query = request.args.get("title", title)
+    # print("title_query: ", title_query)
     
-#     title_query = request.args.get("title")
-#     book = Book.query.filter_by(title=title_query)
+    # book = Book.query.filter_by(title=title_query).first()
+    book = Book.query.filter_by(title=title).first()
+    
+    print("book: ", book)
 
-#     if book:
-#         # return book.to_json(), 200
-#         return {
-#             "id": book.id,
-#             "title": book.title,
-#             "description": book.description
-#         }, 200
+    if book:
+        # return book.to_json(), 200
+        return {
+            "id": book.id,
+            "title": book.title,
+            "description": book.description
+        }, 200
 
-#     return make_response("", 404)
+    return make_response("", 404)
 
 
 @books_bp.route("", methods=["GET"], strict_slashes=False)
