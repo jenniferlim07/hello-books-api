@@ -5,7 +5,6 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String)
     description = db.Column(db.String)
-    author = db.Column(db.String)
 
     def to_json(self):
         return {
